@@ -39,7 +39,7 @@ public class GridSystem : MonoBehaviour
 
                 gridObjectArray[x, z] = new GridObject(this, gridPosition);
 
-                Debug.DrawLine(GetWorldPosition(gridPosition), GetWorldPosition(gridPosition) + Vector3.right * 0.5f, Color.green, 9999.0f);
+                //Debug.DrawLine(GetWorldPosition(gridPosition), GetWorldPosition(gridPosition) + Vector3.right * 0.5f, Color.green, 9999.0f);
 
 
             }
@@ -72,6 +72,25 @@ public class GridSystem : MonoBehaviour
     public GridObject GetGridObject(GridPosition gridPosition)
     {
         return gridObjectArray[gridPosition.x, gridPosition.z];
+    }
+
+    public void SetGridObjectDebug(Transform gridDebugTransform)
+    {
+        for(int x=0; x < width; x++)
+        {
+            for(int z=0;z<height;z++)
+            {
+                GridPosition gridPosition = new GridPosition(x, z);
+
+                Transform gridDebug = Instantiate(gridDebugTransform, GetWorldPosition(gridPosition), Quaternion.identity);
+
+                GridDebugObject gridDebugObject = gridDebug.GetComponent<GridDebugObject>();
+
+                gridDebugObject.SetGridObject(GetGridObject(gridPosition));
+            }
+        }
+
+        
     }
 
 }
