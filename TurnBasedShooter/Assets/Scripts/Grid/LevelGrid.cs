@@ -36,6 +36,8 @@ public class LevelGrid : MonoBehaviour
 
     public GridObject GetGridObject(GridPosition gridPosition) => gridSystem.GetGridObject(gridPosition);
 
+    public bool IsValidGridSystemPosition(GridPosition gridPosition) => gridSystem.IsValidGridSystemPosition(gridPosition);
+
     public void AddUnitAtGridPosition(Unit unit, GridPosition gridPosition)
     {
         GridObject gridObject = GetGridObject(gridPosition);

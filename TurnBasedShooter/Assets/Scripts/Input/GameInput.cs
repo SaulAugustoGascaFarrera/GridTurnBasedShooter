@@ -9,6 +9,8 @@ public class GameInput : MonoBehaviour
 
     public event EventHandler OnMoveAction;
 
+    private InputManager inputActions;
+
     private void Awake()
     {
         if(Instance != null)
@@ -18,14 +20,16 @@ public class GameInput : MonoBehaviour
         }
 
         Instance = this;
+
+        inputActions = new InputManager();
+
+        inputActions.Unit.Enable();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        InputManager inputActions = new InputManager();
-
-        inputActions.Unit.Enable();
+       
 
         inputActions.Unit.Move.performed += Move_performed;
     }

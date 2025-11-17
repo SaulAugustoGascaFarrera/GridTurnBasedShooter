@@ -93,4 +93,10 @@ public class GridSystem : MonoBehaviour
         
     }
 
+
+    public bool IsValidGridSystemPosition(GridPosition gridPosition)
+    {
+        return gridPosition.x < GetWidth() && gridPosition.z < GetHeight() && gridPosition.x >= 0 && gridPosition.z >= 0;
+    }
+
 }
