@@ -9,6 +9,7 @@ public class UnitActionSystem : MonoBehaviour
 
     public event EventHandler OnUnitSelection;
     public event EventHandler OnUnitActionChanged;
+    public event EventHandler<bool> OnBusyStateChanged;
 
     [SerializeField] private Unit unit;
     [SerializeField] private BaseAction selectedAction;
@@ -83,6 +84,12 @@ public class UnitActionSystem : MonoBehaviour
                 }
 
 
+                if(unit.IsEnemy())
+                {
+                    //clicked on a Enemy Unit ,The enemy unit will work with AI 
+                    return false;
+                }
+
                 SetSelectedUnit(unit);
                 return true;
             }
@@ -95,11 +102,15 @@ public class UnitActionSystem : MonoBehaviour
     private void SetBusy()
     {
         isBusy = true;
+
+        OnBusyStateChanged?.Invoke(this, isBusy);
     }
 
     private void ClearBusy()
     {
         isBusy = false;
+
+        OnBusyStateChanged?.Invoke(this, isBusy);
     }
 
     private void SetSelectedUnit(Unit selectedUnit)
