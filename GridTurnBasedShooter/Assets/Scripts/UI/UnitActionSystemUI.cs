@@ -1,11 +1,13 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class UnitActionSystemUI : MonoBehaviour
 {
     [SerializeField] private Transform actionButtonPrefab;
     [SerializeField] private Transform actionButtonContainerTransform;
+    [SerializeField] private TextMeshProUGUI actionPointsText;
 
     private List<ActionButtonUI> actionButtonUIList;
 
@@ -19,11 +21,23 @@ public class UnitActionSystemUI : MonoBehaviour
     {
         UnitActionSystem.Instance.OnUnitSelection += Instance_OnUnitSelection;
         UnitActionSystem.Instance.OnUnitActionChanged += Instance_OnUnitActionChanged;
+        UnitActionSystem.Instance.OnActionStarted += Instance_OnActionStarted;
 
+
+        TurnSystem.Instance.OnTurnChanged += Instance_OnTurnChanged;
+
+        Unit.OnAnyActionPointsChanged += Unit_OnAnyActionPointsChanged;
+
+        UpdateActionPoints();
         CreateUnitActionButtons();
         UpdateSelectedVisual();
     }
 
+
+    private void Instance_OnActionStarted(object sender, System.EventArgs e)
+    {
+        UpdateActionPoints();
+    }
 
     public void CreateUnitActionButtons()
     {
@@ -57,6 +71,7 @@ public class UnitActionSystemUI : MonoBehaviour
     {
         CreateUnitActionButtons();
         UpdateSelectedVisual();
+        UpdateActionPoints();
     }
 
     private void Instance_OnUnitActionChanged(object sender, System.EventArgs e)
@@ -71,5 +86,22 @@ public class UnitActionSystemUI : MonoBehaviour
         {
             actionButtonUI.UpdateSelectedVisual();
         }
+    }
+
+    private void UpdateActionPoints()
+    {
+        Unit selectedUnit = UnitActionSystem.Instance.GetSelectedUnit();
+
+        actionPointsText.text = $"Action Points: {selectedUnit.GetCurrentActionPoints()}";
+    }
+
+    private void Instance_OnTurnChanged(object sender, System.EventArgs e)
+    {
+        UpdateActionPoints();
+    }
+
+    private void Unit_OnAnyActionPointsChanged(object sender, System.EventArgs e)
+    {
+        UpdateActionPoints();
     }
 }

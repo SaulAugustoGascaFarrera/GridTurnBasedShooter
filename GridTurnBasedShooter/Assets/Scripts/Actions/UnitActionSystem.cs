@@ -10,6 +10,7 @@ public class UnitActionSystem : MonoBehaviour
     public event EventHandler OnUnitSelection;
     public event EventHandler OnUnitActionChanged;
     public event EventHandler<bool> OnBusyStateChanged;
+    public event EventHandler OnActionStarted;
 
     [SerializeField] private Unit unit;
     [SerializeField] private BaseAction selectedAction;
@@ -61,9 +62,16 @@ public class UnitActionSystem : MonoBehaviour
 
         if (selectedAction.IsValidActionGridPosition(mouseGridPosition))
         {
-            SetBusy();
-            selectedAction.TakeAction(mouseGridPosition, ClearBusy);
+            if(unit.TrySpendActionPointsToTakeAction(selectedAction))
+            {
+                SetBusy();
+                selectedAction.TakeAction(mouseGridPosition, ClearBusy);
+            }
+
+            
         }
+
+        OnActionStarted?.Invoke(this, EventArgs.Empty);
 
     }
 
