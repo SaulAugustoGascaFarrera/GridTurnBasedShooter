@@ -7,6 +7,7 @@ public class TurnSystemUI : MonoBehaviour
 
     [SerializeField] private Button endTurnButton;
     [SerializeField] private TextMeshProUGUI turnNumberText;
+    [SerializeField] private GameObject enemyTurnVisualGameObject;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -20,11 +21,19 @@ public class TurnSystemUI : MonoBehaviour
         });
 
         UpdateTurnText();
+
+        UpdateEnemyTurnVisual();
+
+        UpdateEndTurnButtonVisibility();
     }
 
     private void Instance_OnTurnChanged(object sender, System.EventArgs e)
     {
         UpdateTurnText();
+
+        UpdateEnemyTurnVisual();
+
+        UpdateEndTurnButtonVisibility();
     }
 
     // Update is called once per frame
@@ -36,5 +45,15 @@ public class TurnSystemUI : MonoBehaviour
     private void UpdateTurnText()
     {
         turnNumberText.text = $"TURN :{TurnSystem.Instance.GetTurnNumber()}";
+    }
+
+    private void UpdateEnemyTurnVisual()
+    {
+        enemyTurnVisualGameObject.SetActive(!TurnSystem.Instance.IsPlayerTurn());
+    }
+
+    private void UpdateEndTurnButtonVisibility()
+    {
+        endTurnButton.gameObject.SetActive(TurnSystem.Instance.IsPlayerTurn());
     }
 }

@@ -47,6 +47,11 @@ public class UnitActionSystem : MonoBehaviour
 
         if (isBusy || !selectedAction) return;
 
+        if(!TurnSystem.Instance.IsPlayerTurn())
+        {
+            return;
+        }
+
 
         if(EventSystem.current.IsPointerOverGameObject())
         {
