@@ -113,6 +113,17 @@ public class Unit : MonoBehaviour
            
         }
 
+        
        
+    }
+
+    public void Damage()
+    {
+        Debug.Log(transform + "damaged!");
+    }
+
+    public Vector3 GetWorldPositoion()
+    {
+        return transform.position;
     }
 }

@@ -55,6 +55,13 @@ public class LevelGrid : MonoBehaviour
         return gridObject.HasAnyUnit();
     }
 
+    public Unit GeUnitAtGridPosition(GridPosition gridPosition)
+    {
+        GridObject gridObject = GetGridObject(gridPosition);
+
+        return gridObject.GetUnit();
+    }
+
     public void MoveUnitStGridPosition(Unit unit,GridPosition fromGridPosition,GridPosition toGridPosition)
     {
         AddUnitAtGridPosition(toGridPosition, unit);

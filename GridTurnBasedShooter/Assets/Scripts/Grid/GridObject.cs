@@ -54,4 +54,16 @@ public class GridObject : MonoBehaviour
     {
         return unitListArray.Count > 0;
     }
+
+    public Unit GetUnit()
+    {
+        if(HasAnyUnit())
+        {
+            return unitListArray[0];
+        }
+        else
+        {
+            return null;
+        }
+    }
 }
